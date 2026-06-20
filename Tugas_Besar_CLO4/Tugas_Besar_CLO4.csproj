@@ -18,6 +18,7 @@
     <None Update="Config\appsettings.JSON">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Folder Include="Forms\Admin\" />
   </ItemGroup>
 
 </Project>
