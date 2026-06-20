@@ -1,30 +1,57 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
+﻿using System;
+using System.IO;
+using System.Text.Json;
 
-namespace Aplikasi_Reservasi_Lapangan_Badminton.Ravie
+namespace Tugas_Besar_CLO4.Config
 {
     public class ConfigService
     {
-        private readonly IConfiguration _config;
+        private readonly string _filePath = "Config/appsettings.json";
+        private AppConfig _currentConfig;
 
         public ConfigService()
         {
-            _config = new ConfigurationBuilder()
-                .AddJsonFile("config/appsettings.json")
-                .Build();
+            LoadConfig();
         }
 
-        public decimal GetTax()
+        private void LoadConfig()
         {
-            return _config.GetValue<decimal>("Tax");
+            try
+            {
+                if (File.Exists(_filePath))
+                {
+                    string json = File.ReadAllText(_filePath);
+                    _currentConfig = JsonSerializer.Deserialize<AppConfig>(json) ?? new AppConfig { Tax = 0.11m, Discount = 0.05m };
+                }
+                else
+                {
+                    _currentConfig = new AppConfig { Tax = 0.11m, Discount = 0.05m };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error membaca config: {ex.Message}");
+                _currentConfig = new AppConfig { Tax = 0.11m, Discount = 0.05m };
+            }
         }
 
-        public decimal GetDiscount()
+        public decimal GetTax() => _currentConfig.Tax;
+        public decimal GetDiscount() => _currentConfig.Discount;
+
+        public void UpdateConfig(decimal newTax, decimal newDiscount)
         {
-            return _config.GetValue<decimal>("Discount");
+            _currentConfig.Tax = newTax;
+            _currentConfig.Discount = newDiscount;
+
+            var directoryInfo = new FileInfo(_filePath).Directory;
+            if (directoryInfo != null && !directoryInfo.Exists)
+            {
+                directoryInfo.Create();
+            }
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(_currentConfig, options);
+            File.WriteAllText(_filePath, json);
         }
     }
 }

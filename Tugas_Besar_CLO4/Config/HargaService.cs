@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Aplikasi_Reservasi_Lapangan_Badminton.Ravie
+namespace Tugas_Besar_CLO4.Config
 {
     public class HargaService
     {
