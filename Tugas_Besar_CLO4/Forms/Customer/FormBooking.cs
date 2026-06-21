@@ -17,6 +17,8 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         {
             InitializeComponent();
 
+            txtStatus.Text = "Pending";
+
             txtLapangan.Text = tipeLapangan;
 
             HitungTotal();
@@ -29,6 +31,8 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         {
             InitializeComponent();
 
+            txtStatus.Text = "Pending";
+
             txtHari.Text = tanggal;
             txtGedung.Text = gedung;
             txtLapangan.Text = tipeLapangan;
@@ -40,11 +44,20 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         {
             InitializeComponent();
 
-            lblStatus.Text = "Pending";
+            txtStatus.Text = "Pending";
+
         }
         private void HitungTotal()
         {
             int hargaPerJam = 50000;
+
+            var config = ConfigService.Instance;
+
+            decimal tax = config.GetTax();
+            decimal discount = config.GetDiscount();
+
+            txtPersenTax.Text = (tax * 100).ToString("0") + "%";
+            txtPersenDiskon.Text = (discount * 100).ToString("0") + "%";
 
             // Cek apakah teks lapangan mengandung kata "VIP", "Court B", "Court D", atau "Court F"
             if (txtLapangan.Text.Contains("VIP") ||
@@ -59,10 +72,15 @@ namespace Tugas_Besar_CLO4.Forms.Customer
             txtHarga.Text = hargaPerJam.ToString();
 
 
-            // === 2. VALIDASI INPUTAN JAM & DURASI ===
-            // Jika Jam Mulai atau Durasi masih kosong, berhenti di sini dulu (tapi harga di atas sudah aman keisi)
+
+            // Jika Jam Mulai atau Durasi masih kosong, berhenti di sini dulu
             if (string.IsNullOrWhiteSpace(txtMulai.Text) || string.IsNullOrWhiteSpace(txtDurasi.Text))
             {
+                txtSelesai.Clear();
+                txtAwal.Clear();
+                txtTax.Clear();
+                txtTotal.Clear();
+
                 return;
             }
 
@@ -76,8 +94,6 @@ namespace Tugas_Besar_CLO4.Forms.Customer
                 return;
 
 
-            // === 3. HITUNG OTOMATIS LAINNYA JIKA JAM & DURASI SUDAH DIISI ===
-
             // Hitung Jam Selesai
             int jamSelesai = jamMulai + durasi;
             txtSelesai.Text = jamSelesai.ToString("00") + ".00";
@@ -87,9 +103,9 @@ namespace Tugas_Besar_CLO4.Forms.Customer
             txtAwal.Text = hargaAwal.ToString();
 
             // Hitung Pajak dari ConfigService
-            ConfigService config = new ConfigService();
-            decimal tax = config.GetTax();
             double pajak = hargaAwal * (double)tax;
+            double diskon = hargaAwal * (double)discount;
+
             txtTax.Text = pajak.ToString();
 
             // Hitung Total Akhir
@@ -116,8 +132,7 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
             if (hasil == DialogResult.Yes)
             {
-                FilterJadwalForms form =
-                    new FilterJadwalForms();
+                FilterJadwalForms form = new FilterJadwalForms();
 
                 this.Hide();
 
@@ -131,42 +146,32 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         {
             try
             {
-                Booking booking =
-      new Booking();
+                if (string.IsNullOrWhiteSpace(txtNamaPemesan.Text))
+                {
+                    MessageBox.Show(
+                        "Nama pemesan harus diisi.",
+                        "Peringatan",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
-                booking.NamaPemesan =
-                    txtNamaPemesan.Text;
+                    txtNamaPemesan.Focus();
+                    return;
+                }
 
-                booking.HariMulai =
-                    DateTime.Parse(
-                        txtHari.Text);
+                Booking booking = new Booking();
 
-                booking.JamMulai =
-                    txtMulai.Text;
-
-                booking.JamSelesai =
-                    txtSelesai.Text;
-
-                booking.Durasi =
-                    int.Parse(
-                        txtDurasi.Text);
-
-                booking.HargaAwal =
-                    double.Parse(
-                        txtAwal.Text);
-
-                booking.Pajak =
-                    double.Parse(
-                        txtTax.Text);
-
-                booking.TotalHarga =
-                    double.Parse(
-                        txtTotal.Text);
+                booking.NamaPemesan = txtNamaPemesan.Text;
+                booking.HariMulai = DateTime.Parse(txtHari.Text);
+                booking.JamMulai = txtMulai.Text;
+                booking.JamSelesai = txtSelesai.Text;
+                booking.Durasi = int.Parse(txtDurasi.Text);
+                booking.HargaAwal = double.Parse(txtAwal.Text);
+                booking.Pajak = double.Parse(txtTax.Text);
+                booking.TotalHarga = double.Parse(txtTotal.Text);
 
                 booking.Bayar();
 
-                lblStatus.Text =
-                    booking.Status.ToString();
+                txtStatus.Text = booking.Status.ToString();
 
                 MessageBox.Show(
                     "Reservasi berhasil dibayar!",
@@ -174,12 +179,16 @@ namespace Tugas_Besar_CLO4.Forms.Customer
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
+
+                FilterJadwalForms form = new FilterJadwalForms();
+
+                this.Hide();
+                form.ShowDialog();
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.Message
-                );
+                MessageBox.Show(ex.Message);
             }
         }
 

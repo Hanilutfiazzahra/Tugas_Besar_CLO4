@@ -41,7 +41,7 @@
             lblTax = new Label();
             lblTotal = new Label();
             lblStatus = new Label();
-            label14 = new Label();
+            txtStatus = new Label();
             txtNamaPemesan = new TextBox();
             txtHari = new TextBox();
             txtGedung = new TextBox();
@@ -68,12 +68,18 @@
             btnBayar = new Button();
             btnCancel = new Button();
             btnBack = new Button();
+            label16 = new Label();
+            label14 = new Label();
+            label15 = new Label();
+            label17 = new Label();
+            txtPersenDiskon = new TextBox();
+            txtPersenTax = new TextBox();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(188, 9);
+            label1.Location = new Point(373, 9);
             label1.Name = "label1";
             label1.Size = new Size(145, 20);
             label1.TabIndex = 0;
@@ -136,7 +142,7 @@
             // lblHarga
             // 
             lblHarga.AutoSize = true;
-            lblHarga.Location = new Point(12, 356);
+            lblHarga.Location = new Point(480, 41);
             lblHarga.Name = "lblHarga";
             lblHarga.Size = new Size(90, 20);
             lblHarga.TabIndex = 7;
@@ -145,7 +151,7 @@
             // lblSelesai
             // 
             lblSelesai.AutoSize = true;
-            lblSelesai.Location = new Point(12, 413);
+            lblSelesai.Location = new Point(480, 97);
             lblSelesai.Name = "lblSelesai";
             lblSelesai.Size = new Size(85, 20);
             lblSelesai.TabIndex = 8;
@@ -154,7 +160,7 @@
             // lblAwal
             // 
             lblAwal.AutoSize = true;
-            lblAwal.Location = new Point(12, 465);
+            lblAwal.Location = new Point(480, 145);
             lblAwal.Name = "lblAwal";
             lblAwal.Size = new Size(87, 20);
             lblAwal.TabIndex = 9;
@@ -163,16 +169,16 @@
             // lblTax
             // 
             lblTax.AutoSize = true;
-            lblTax.Location = new Point(12, 514);
+            lblTax.Location = new Point(480, 251);
             lblTax.Name = "lblTax";
-            lblTax.Size = new Size(43, 20);
+            lblTax.Size = new Size(88, 20);
             lblTax.TabIndex = 10;
-            lblTax.Text = "Pajak";
+            lblTax.Text = "Harga Pajak";
             // 
             // lblTotal
             // 
             lblTotal.AutoSize = true;
-            lblTotal.Location = new Point(15, 562);
+            lblTotal.Location = new Point(480, 356);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(87, 20);
             lblTotal.TabIndex = 11;
@@ -181,25 +187,25 @@
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(12, 601);
+            lblStatus.Location = new Point(480, 413);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(49, 20);
             lblStatus.TabIndex = 12;
             lblStatus.Text = "Status";
             lblStatus.Click += label13_Click;
             // 
-            // label14
+            // txtStatus
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(308, 601);
-            label14.Name = "label14";
-            label14.Size = new Size(62, 20);
-            label14.TabIndex = 13;
-            label14.Text = "Pending";
+            txtStatus.AutoSize = true;
+            txtStatus.Location = new Point(668, 413);
+            txtStatus.Name = "txtStatus";
+            txtStatus.Size = new Size(62, 20);
+            txtStatus.TabIndex = 13;
+            txtStatus.Text = "Pending";
             // 
             // txtNamaPemesan
             // 
-            txtNamaPemesan.Location = new Point(308, 41);
+            txtNamaPemesan.Location = new Point(238, 41);
             txtNamaPemesan.Name = "txtNamaPemesan";
             txtNamaPemesan.Size = new Size(125, 27);
             txtNamaPemesan.TabIndex = 14;
@@ -207,31 +213,34 @@
             // 
             // txtHari
             // 
-            txtHari.Location = new Point(308, 90);
+            txtHari.Location = new Point(238, 90);
             txtHari.Name = "txtHari";
+            txtHari.ReadOnly = true;
             txtHari.Size = new Size(125, 27);
             txtHari.TabIndex = 15;
             txtHari.TextChanged += txtHari_TextChanged;
             // 
             // txtGedung
             // 
-            txtGedung.Location = new Point(308, 138);
+            txtGedung.Location = new Point(238, 138);
             txtGedung.Name = "txtGedung";
+            txtGedung.ReadOnly = true;
             txtGedung.Size = new Size(125, 27);
             txtGedung.TabIndex = 16;
             txtGedung.TextChanged += txtGedung_TextChanged;
             // 
             // txtLapangan
             // 
-            txtLapangan.Location = new Point(308, 188);
+            txtLapangan.Location = new Point(238, 188);
             txtLapangan.Name = "txtLapangan";
+            txtLapangan.ReadOnly = true;
             txtLapangan.Size = new Size(125, 27);
             txtLapangan.TabIndex = 17;
             txtLapangan.TextChanged += txtLapangan_TextChanged;
             // 
             // txtMulai
             // 
-            txtMulai.Location = new Point(308, 244);
+            txtMulai.Location = new Point(238, 244);
             txtMulai.Name = "txtMulai";
             txtMulai.Size = new Size(125, 27);
             txtMulai.TabIndex = 18;
@@ -239,7 +248,7 @@
             // 
             // txtDurasi
             // 
-            txtDurasi.Location = new Point(308, 294);
+            txtDurasi.Location = new Point(238, 294);
             txtDurasi.Name = "txtDurasi";
             txtDurasi.Size = new Size(125, 27);
             txtDurasi.TabIndex = 19;
@@ -247,7 +256,7 @@
             // 
             // txtHarga
             // 
-            txtHarga.Location = new Point(308, 349);
+            txtHarga.Location = new Point(668, 34);
             txtHarga.Name = "txtHarga";
             txtHarga.ReadOnly = true;
             txtHarga.Size = new Size(125, 27);
@@ -255,7 +264,7 @@
             // 
             // txtSelesai
             // 
-            txtSelesai.Location = new Point(308, 406);
+            txtSelesai.Location = new Point(668, 90);
             txtSelesai.Name = "txtSelesai";
             txtSelesai.ReadOnly = true;
             txtSelesai.Size = new Size(125, 27);
@@ -263,7 +272,7 @@
             // 
             // txtAwal
             // 
-            txtAwal.Location = new Point(308, 458);
+            txtAwal.Location = new Point(668, 142);
             txtAwal.Name = "txtAwal";
             txtAwal.ReadOnly = true;
             txtAwal.Size = new Size(125, 27);
@@ -271,7 +280,7 @@
             // 
             // txtTax
             // 
-            txtTax.Location = new Point(308, 507);
+            txtTax.Location = new Point(668, 248);
             txtTax.Name = "txtTax";
             txtTax.ReadOnly = true;
             txtTax.Size = new Size(125, 27);
@@ -279,7 +288,7 @@
             // 
             // txtTotal
             // 
-            txtTotal.Location = new Point(308, 555);
+            txtTotal.Location = new Point(668, 349);
             txtTotal.Name = "txtTotal";
             txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(125, 27);
@@ -288,7 +297,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(238, 48);
+            label2.Location = new Point(188, 48);
             label2.Name = "label2";
             label2.Size = new Size(12, 20);
             label2.TabIndex = 25;
@@ -297,7 +306,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(238, 97);
+            label3.Location = new Point(188, 97);
             label3.Name = "label3";
             label3.Size = new Size(12, 20);
             label3.TabIndex = 26;
@@ -306,7 +315,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(238, 145);
+            label4.Location = new Point(188, 145);
             label4.Name = "label4";
             label4.Size = new Size(12, 20);
             label4.TabIndex = 27;
@@ -315,7 +324,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(238, 195);
+            label5.Location = new Point(188, 195);
             label5.Name = "label5";
             label5.Size = new Size(12, 20);
             label5.TabIndex = 28;
@@ -324,7 +333,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(238, 251);
+            label6.Location = new Point(188, 251);
             label6.Name = "label6";
             label6.Size = new Size(12, 20);
             label6.TabIndex = 29;
@@ -333,7 +342,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(238, 301);
+            label7.Location = new Point(188, 301);
             label7.Name = "label7";
             label7.Size = new Size(12, 20);
             label7.TabIndex = 30;
@@ -342,7 +351,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(238, 356);
+            label8.Location = new Point(603, 41);
             label8.Name = "label8";
             label8.Size = new Size(12, 20);
             label8.TabIndex = 31;
@@ -351,7 +360,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(238, 413);
+            label9.Location = new Point(603, 97);
             label9.Name = "label9";
             label9.Size = new Size(12, 20);
             label9.TabIndex = 32;
@@ -360,7 +369,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(238, 465);
+            label10.Location = new Point(603, 145);
             label10.Name = "label10";
             label10.Size = new Size(12, 20);
             label10.TabIndex = 33;
@@ -369,7 +378,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(238, 514);
+            label11.Location = new Point(603, 195);
             label11.Name = "label11";
             label11.Size = new Size(12, 20);
             label11.TabIndex = 34;
@@ -378,7 +387,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(238, 562);
+            label12.Location = new Point(603, 251);
             label12.Name = "label12";
             label12.Size = new Size(12, 20);
             label12.TabIndex = 35;
@@ -387,7 +396,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(238, 601);
+            label13.Location = new Point(603, 301);
             label13.Name = "label13";
             label13.Size = new Size(12, 20);
             label13.TabIndex = 36;
@@ -395,7 +404,7 @@
             // 
             // btnBayar
             // 
-            btnBayar.Location = new Point(308, 665);
+            btnBayar.Location = new Point(480, 498);
             btnBayar.Name = "btnBayar";
             btnBayar.Size = new Size(94, 29);
             btnBayar.TabIndex = 37;
@@ -405,7 +414,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(476, 665);
+            btnCancel.Location = new Point(699, 498);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(94, 29);
             btnCancel.TabIndex = 38;
@@ -415,7 +424,7 @@
             // 
             // btnBack
             // 
-            btnBack.Location = new Point(3, 665);
+            btnBack.Location = new Point(12, 498);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(94, 29);
             btnBack.TabIndex = 39;
@@ -423,11 +432,69 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(480, 301);
+            label16.Name = "label16";
+            label16.Size = new Size(76, 20);
+            label16.TabIndex = 40;
+            label16.Text = "Diskon(%)";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(480, 195);
+            label14.Name = "label14";
+            label14.Size = new Size(65, 20);
+            label14.TabIndex = 41;
+            label14.Text = "Pajak(%)";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(603, 356);
+            label15.Name = "label15";
+            label15.Size = new Size(12, 20);
+            label15.TabIndex = 42;
+            label15.Text = ":";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(603, 413);
+            label17.Name = "label17";
+            label17.Size = new Size(12, 20);
+            label17.TabIndex = 43;
+            label17.Text = ":";
+            // 
+            // txtPersenDiskon
+            // 
+            txtPersenDiskon.Location = new Point(668, 298);
+            txtPersenDiskon.Name = "txtPersenDiskon";
+            txtPersenDiskon.ReadOnly = true;
+            txtPersenDiskon.Size = new Size(125, 27);
+            txtPersenDiskon.TabIndex = 44;
+            // 
+            // txtPersenTax
+            // 
+            txtPersenTax.Location = new Point(668, 192);
+            txtPersenTax.Name = "txtPersenTax";
+            txtPersenTax.ReadOnly = true;
+            txtPersenTax.Size = new Size(125, 27);
+            txtPersenTax.TabIndex = 45;
+            // 
             // FormBooking
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(582, 722);
+            ClientSize = new Size(882, 535);
+            Controls.Add(txtPersenTax);
+            Controls.Add(txtPersenDiskon);
+            Controls.Add(label17);
+            Controls.Add(label15);
+            Controls.Add(label14);
+            Controls.Add(label16);
             Controls.Add(btnBack);
             Controls.Add(btnCancel);
             Controls.Add(btnBayar);
@@ -454,7 +521,7 @@
             Controls.Add(txtGedung);
             Controls.Add(txtHari);
             Controls.Add(txtNamaPemesan);
-            Controls.Add(label14);
+            Controls.Add(txtStatus);
             Controls.Add(lblStatus);
             Controls.Add(lblTotal);
             Controls.Add(lblTax);
@@ -489,7 +556,7 @@
         private Label lblTax;
         private Label lblTotal;
         private Label lblStatus;
-        private Label label14;
+        private Label txtStatus;
         private TextBox txtNamaPemesan;
         private TextBox txtHari;
         private TextBox txtGedung;
@@ -516,5 +583,11 @@
         private Button btnBayar;
         private Button btnCancel;
         private Button btnBack;
+        private Label label16;
+        private Label label14;
+        private Label label15;
+        private Label label17;
+        private TextBox txtPersenDiskon;
+        private TextBox txtPersenTax;
     }
 }
