@@ -18,6 +18,11 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         private ScheduleService scheduleService;
         private List<Lapangan> daftarLapangan;
 
+        private string jamDipilih = "";
+
+        private DateTime _hariTerpilih;
+        private string _gedungTerpilih;
+
         public FormJadwalLapangan()
         {
             InitializeComponent();
@@ -71,7 +76,32 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
         private void lblLanjutReservasi_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(cmbTipeLapangan.Text))
+            {
+                MessageBox.Show("Pilih tipe lapangan terlebih dahulu.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // Ambil data teks yang rapi untuk dilempar ke FormBooking
+            string tanggalKirim = _hariTerpilih != DateTime.MinValue
+                ? _hariTerpilih.ToString("dd MMMM yyyy")
+                : DateTime.Now.ToString("dd MMMM yyyy");
+
+            string gedungKirim = !string.IsNullOrEmpty(_gedungTerpilih) ? _gedungTerpilih : "Gedung A";
+            string tipeLapanganKirim = cmbTipeLapangan.Text;
+            string jamMulaiDefault = ""; 
+
+            // constructor booking
+            FormBooking booking = new FormBooking(
+                tanggalKirim,
+                gedungKirim,
+                tipeLapanganKirim,
+                jamMulaiDefault
+            );
+
+            this.Hide();
+            booking.ShowDialog();
+            this.Show();
         }
 
         private void FormJadwalLapangan_Load(object sender, EventArgs e)
