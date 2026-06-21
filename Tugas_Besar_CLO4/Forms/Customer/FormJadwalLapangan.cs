@@ -18,9 +18,20 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         private ScheduleService scheduleService;
         private List<Lapangan> daftarLapangan;
 
-        public FormJadwalLapangan()
+        private string jamDipilih = "";
+
+        private DateTime _hariTerpilih;
+        private string _gedungTerpilih;
+
+        public FormJadwalLapangan(
+        DateTime hari,
+         string gedung
+        )
         {
             InitializeComponent();
+
+            _hariTerpilih = hari;
+            _gedungTerpilih = gedung;
 
             lapanganService =
                 new LapanganService();
@@ -31,19 +42,20 @@ namespace Tugas_Besar_CLO4.Forms.Customer
             daftarLapangan =
                 lapanganService
                 .GetLapanganByGedung(
-                    "Gedung A"
+                    gedung
                 );
 
             lblTanggal.Text =
                 "Tanggal : "
-                + DateTime.Now.ToString(
-                    "dd MMMM yyyy"
+                + hari.ToString(
+                    "dddd, dd MMMM yyyy"
                 );
 
             lblGedung.Text =
-                "Gedung : Gedung A";
-        }
+                "Gedung : "
+                + gedung;
 
+        }
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -69,9 +81,34 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
         }
 
-        private void lblLanjutReservasi_Click(object sender, EventArgs e)
+private void lblLanjutReservasi_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(cmbTipeLapangan.Text))
+            {
+                MessageBox.Show("Pilih tipe lapangan terlebih dahulu.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // Ambil data teks yang rapi untuk dilempar ke FormBooking
+            string tanggalKirim = _hariTerpilih != DateTime.MinValue
+                ? _hariTerpilih.ToString("dd MMMM yyyy")
+                : DateTime.Now.ToString("dd MMMM yyyy");
+
+            string gedungKirim = !string.IsNullOrEmpty(_gedungTerpilih) ? _gedungTerpilih : "Gedung A";
+            string tipeLapanganKirim = cmbTipeLapangan.Text;
+            string jamMulaiDefault = "";
+
+            // constructor booking
+            FormBooking booking = new FormBooking(
+                tanggalKirim,
+                gedungKirim,
+                tipeLapanganKirim,
+                jamMulaiDefault
+            );
+
+            this.Hide();
+            booking.ShowDialog();
+            this.Show();
         }
 
         private void FormJadwalLapangan_Load(object sender, EventArgs e)
@@ -106,16 +143,62 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         }
 
         private void TampilkanJadwal(
-    Lapangan lapangan
-)
+            Lapangan lapangan
+        )
         {
             dgnJadwal.Rows.Clear();
 
-            lapangan.jadwal.Clear();
+            if (
+                lapangan.jadwal.Count == 0
+            )
+            {
+                scheduleService.generateJadwal(
+                    lapangan
+                );
+            }
+                    ;
 
-            scheduleService.generateJadwal(
-                lapangan
-            );
+            List<Booking> semuaBooking =
+    BookingService.Instance
+        .GetSemuaRiwayat();
+
+            foreach (Booking booking in semuaBooking)
+            {
+                if (
+                    booking.HariMulai.Date != _hariTerpilih.Date
+                    ||
+                    booking.Gedung != _gedungTerpilih
+                    ||
+                    booking.TipeLapangan != lapangan.tipe
+                )
+                {
+                    continue;
+                }
+
+                string jamMulai =
+                    booking.JamMulai
+                        .Replace(".00", "")
+                        .Replace(":00", "");
+
+                string jamSelesai =
+                    booking.JamSelesai
+                        .Replace(".00", "")
+                        .Replace(":00", "");
+
+                int mulai = int.Parse(jamMulai);
+                int selesai = int.Parse(jamSelesai);
+
+                for (int jam = mulai; jam < selesai; jam++)
+                {
+                    string range =
+                        $"{jam:00}.00 - {jam + 1:00}.00";
+
+                    if (lapangan.jadwal.ContainsKey(range))
+                    {
+                        lapangan.jadwal[range] = true;
+                    }
+                }
+            }
 
             lblPilihan.Text =
                 "Tipe Lapangan : "

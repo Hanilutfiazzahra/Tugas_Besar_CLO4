@@ -102,7 +102,10 @@ namespace Tugas_Besar_CLO4.Forms.Customer
                 if (hasil == DialogResult.Yes)
                 {
                     FormJadwalLapangan form =
-                        new FormJadwalLapangan();
+                        new FormJadwalLapangan(
+                            filter.Hari,
+                            filter.Gedung
+                        );
 
                     this.Hide();
 
