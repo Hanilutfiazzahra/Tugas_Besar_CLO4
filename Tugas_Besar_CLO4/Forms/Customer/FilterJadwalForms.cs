@@ -124,12 +124,17 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void dtpHari_ValueChanged(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void FilterJadwalForms_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
