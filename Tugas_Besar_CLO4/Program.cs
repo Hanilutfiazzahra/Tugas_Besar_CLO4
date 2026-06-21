@@ -18,7 +18,7 @@ namespace Tugas_Besar_CLO4
             Application.Run(new Form1());
 //=======
             Application.Run(
-                new Forms.Customer.FilterJadwalForms()
+                new Forms.FormLogin()
             );
 //>>>>>>> origin
         }
