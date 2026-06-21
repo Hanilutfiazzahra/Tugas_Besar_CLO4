@@ -102,7 +102,7 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
         private void btnKembali_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void TampilkanJadwal(

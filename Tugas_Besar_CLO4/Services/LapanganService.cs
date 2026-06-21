@@ -77,6 +77,17 @@ namespace Tugas_Besar_CLO4.Services
             return daftarLapangan
                 .Where(x => x.lokasi == gedung)
                 .ToList();
+            }
+
+            //tambahan 
+             public List<string> GetDaftarGedung()
+            {
+                return new List<string>()
+            {
+                "Gedung A",
+                "Gedung B",
+                "Gedung C"
+            };
         }
     }
 }
