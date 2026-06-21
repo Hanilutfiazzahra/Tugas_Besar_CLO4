@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Tugas_Besar_CLO4.Config;
 using Tugas_Besar_CLO4.Entities;
+using Tugas_Besar_CLO4.Services;
 
 namespace Tugas_Besar_CLO4.Forms.Customer
 {
@@ -171,7 +172,13 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
                 booking.Bayar();
 
-                txtStatus.Text = booking.Status.ToString();
+                BookingService.Instance
+                    .SimpanBooking(
+                        booking
+                    );
+
+                txtStatus.Text =
+                    booking.Status.ToString();
 
                 MessageBox.Show(
                     "Reservasi berhasil dibayar!",

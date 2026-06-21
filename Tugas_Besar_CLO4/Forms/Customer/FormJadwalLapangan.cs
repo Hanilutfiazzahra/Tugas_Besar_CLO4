@@ -9,6 +9,7 @@ using Tugas_Besar_CLO4.Entities;
 using Tugas_Besar_CLO4.Services;
 using System.Linq;
 
+
 namespace Tugas_Besar_CLO4.Forms.Customer
 {
     public partial class FormJadwalLapangan : Form
@@ -23,9 +24,15 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         private DateTime _hariTerpilih;
         private string _gedungTerpilih;
 
-        public FormJadwalLapangan()
+        public FormJadwalLapangan(
+        DateTime hari,
+         string gedung
+        )
         {
             InitializeComponent();
+
+            _hariTerpilih = hari;
+            _gedungTerpilih = gedung;
 
             lapanganService =
                 new LapanganService();
@@ -36,17 +43,19 @@ namespace Tugas_Besar_CLO4.Forms.Customer
             daftarLapangan =
                 lapanganService
                 .GetLapanganByGedung(
-                    "Gedung A"
+                    gedung
                 );
 
             lblTanggal.Text =
                 "Tanggal : "
-                + DateTime.Now.ToString(
-                    "dd MMMM yyyy"
+                + hari.ToString(
+                    "dddd, dd MMMM yyyy"
                 );
 
             lblGedung.Text =
-                "Gedung : Gedung A";
+                "Gedung : "
+                + gedung;
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -89,7 +98,7 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
             string gedungKirim = !string.IsNullOrEmpty(_gedungTerpilih) ? _gedungTerpilih : "Gedung A";
             string tipeLapanganKirim = cmbTipeLapangan.Text;
-            string jamMulaiDefault = ""; 
+            string jamMulaiDefault = "";
 
             // constructor booking
             FormBooking booking = new FormBooking(
@@ -141,11 +150,45 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         {
             dgnJadwal.Rows.Clear();
 
-            lapangan.jadwal.Clear();
+            if (
+                lapangan.jadwal.Count == 0
+            )
+            {
+                scheduleService.generateJadwal(
+                    lapangan
+                );
+            }
+            ;
 
-            scheduleService.generateJadwal(
-                lapangan
-            );
+            List<Booking> semuaBooking =
+    BookingService.Instance
+        .GetSemuaRiwayat();
+
+            foreach (Booking booking in semuaBooking)
+            {
+                string jamMulai =
+                    booking.JamMulai
+                        .Replace(".00", "")
+                        .Replace(":00", "");
+
+                string jamSelesai =
+                    booking.JamSelesai
+                        .Replace(".00", "")
+                        .Replace(":00", "");
+
+                string range =
+                    $"{int.Parse(jamMulai):00}.00 - " +
+                    $"{int.Parse(jamSelesai):00}.00";
+
+                if (
+                    lapangan.jadwal.ContainsKey(
+                        range
+                    )
+                )
+                {
+                    lapangan.jadwal[range] = true;
+                }
+            }
 
             lblPilihan.Text =
                 "Tipe Lapangan : "
@@ -222,6 +265,11 @@ namespace Tugas_Besar_CLO4.Forms.Customer
                     status2
                 );
             }
+        }
+
+        private void lblGedung_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -184,6 +184,7 @@
             lblGedung.Size = new Size(72, 20);
             lblGedung.TabIndex = 11;
             lblGedung.Text = "Gedung : ";
+            lblGedung.Click += lblGedung_Click;
             // 
             // cmbTipeLapangan
             // 
