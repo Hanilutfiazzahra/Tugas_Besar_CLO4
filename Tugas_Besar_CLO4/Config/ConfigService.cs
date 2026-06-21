@@ -6,12 +6,29 @@ namespace Tugas_Besar_CLO4.Config
 {
     public class ConfigService
     {
+        private static ConfigService _instance;
+
         private readonly string _filePath = "Config/appsettings.json";
         private AppConfig _currentConfig;
 
-        public ConfigService()
+        // Constructor private agar tidak bisa sembarangan dipanggil menggunakan 'new'
+        private ConfigService()
         {
             LoadConfig();
+        }
+
+        // Properti publik untuk mengakses instance tunggal (Singleton)
+        public static ConfigService Instance
+        {
+            get
+            {
+                // Jika belum pernah dibuat, maka buat baru. Jika sudah, kembalikan yang lama.
+                if (_instance == null)
+                {
+                    _instance = new ConfigService();
+                }
+                return _instance;
+            }
         }
 
         private void LoadConfig()

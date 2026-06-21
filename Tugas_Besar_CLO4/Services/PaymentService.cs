@@ -8,31 +8,27 @@ namespace Tugas_Besar_CLO4.Services
 {
     public class PaymentService
     {
-        private readonly ConfigService _config;
-
-        public PaymentService(ConfigService config)
+        // Constructor kosong karena tidak perlu injeksi parameter lagi
+        public PaymentService()
         {
-            _config = config;
+
         }
 
         public double HitungHargaAwal(Booking booking)
         {
-            return booking.Lapangan.hargaPerJam *
-                   booking.Durasi;
+            return booking.Lapangan.hargaPerJam * booking.Durasi;
         }
 
         public double HitungPajak(double hargaAwal)
         {
-            return hargaAwal *
-                   (double)_config.GetTax();
+            // Ambil langsung dari Singleton
+            return hargaAwal * (double)ConfigService.Instance.GetTax();
         }
 
         public double HitungTotal(double hargaAwal)
         {
-            double pajak =
-                hargaAwal *
-                (double)_config.GetTax();
-
+            // Ambil langsung dari Singleton
+            double pajak = hargaAwal * (double)ConfigService.Instance.GetTax();
             return hargaAwal + pajak;
         }
     }

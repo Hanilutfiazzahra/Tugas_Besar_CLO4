@@ -4,11 +4,10 @@ namespace Tugas_Besar_CLO4.Config
 {
     public class HargaService
     {
-        private readonly ConfigService _config;
-
-        public HargaService(ConfigService config)
+        // Constructor tidak perlu lagi menerima parameter ConfigService
+        public HargaService()
         {
-            _config = config;
+
         }
 
         public decimal HitungHarga(decimal hargaAwal)
@@ -18,8 +17,9 @@ namespace Tugas_Besar_CLO4.Config
                 throw new Exception("Harga tidak boleh negatif");
             }
 
-            decimal discount = _config.GetDiscount();
-            decimal tax = _config.GetTax();
+            // Panggil Singleton Instance secara langsung
+            decimal discount = ConfigService.Instance.GetDiscount();
+            decimal tax = ConfigService.Instance.GetTax();
 
             decimal hasil = hargaAwal - (hargaAwal * discount);
             hasil += hasil * tax;
