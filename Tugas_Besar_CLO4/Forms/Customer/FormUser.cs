@@ -85,5 +85,14 @@ namespace Tugas_Besar_CLO4.Forms.Customer
             formFilterJadwal.ShowDialog();
             this.Show();
         }
+
+        private void btnRiwayat_Click(object sender, EventArgs e)
+        {
+            FormRiwayatBookingCustomer formRiwayat = new FormRiwayatBookingCustomer(emailUser);
+
+            this.Hide();
+            formRiwayat.ShowDialog();
+            this.Show();
+        }
     }
 }

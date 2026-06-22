@@ -37,5 +37,21 @@ namespace Tugas_Besar_CLO4.Forms.Admin
         {
             this.Close();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FormRiwayatBooking formRiwayat = new FormRiwayatBooking();
+            this.Hide();
+            formRiwayat.ShowDialog();
+            this.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FormAdminConfig formConfig = new FormAdminConfig();
+            this.Hide();
+            formConfig.ShowDialog();
+            this.Show();
+        }
     }
 }
