@@ -17,7 +17,6 @@ namespace Tugas_Besar_CLO4
 
             ApplicationConfiguration.Initialize();
 //<<<<<<< HEAD
-            Application.Run(new Form1());
 //=======
             Application.Run(
                 new Forms.FormLogin()
