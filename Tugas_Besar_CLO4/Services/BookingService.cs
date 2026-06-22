@@ -42,9 +42,9 @@ namespace Tugas_Besar_CLO4.Services
         }
 
         // Ambil data khusus untuk user yang sedang login(customer)
-        public List<Booking> GetRiwayatCustomer(string namaCustomer)
+        public List<Booking> GetRiwayatCustomer(string customer)
         {
-            return _bookingRepository.Find(b => b.NamaPemesan.Equals(namaCustomer, StringComparison.OrdinalIgnoreCase));
+            return _bookingRepository.GetAll();
         }
     }
 }

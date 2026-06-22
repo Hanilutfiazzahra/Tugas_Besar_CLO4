@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Aplikasi_Reservasi_Lapangan_Badminton\Aplikasi_Reservasi_Lapangan_Badminton.csproj" />
     <ProjectReference Include="..\Tugas_Besar_CLO4\Tugas_Besar_CLO4.csproj" />
   </ItemGroup>
 

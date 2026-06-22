@@ -10,7 +10,6 @@ namespace Tugas_Besar_CLO4.Forms.Customer
     {
         private string identitasCustomer;
 
-        // Constructor menerima identitas customer (email/nama) dari halaman sebelumnya
         public FormRiwayatBookingCustomer(string customerId)
         {
             InitializeComponent();
@@ -22,19 +21,28 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         {
             dgvBooking.Rows.Clear();
 
-            // Tarik data spesifik untuk customer ini menggunakan Singleton
+            // 1. Tarik data dari Service
             List<Booking> riwayatSaya = BookingService.Instance.GetRiwayatCustomer(identitasCustomer);
 
-            // Masukkan data ke dalam baris tabel
-            foreach (Booking b in riwayatSaya)
+            // 2. DEBUG: Tambahkan ini untuk memastikan apakah datanya memang nol
+            if (riwayatSaya.Count == 0)
             {
-                dgvBooking.Rows.Add(b.NamaPemesan, b.TipeLapangan, b.Durasi, b.Status.ToString());
+                MessageBox.Show("Tidak ada riwayat ditemukan untuk: " + identitasCustomer +
+                                "\nPastikan nama pemesan saat booking sama persis dengan email login ini.",
+                                "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // 3. Masukkan data ke dalam baris tabel jika ada
+                foreach (Booking b in riwayatSaya)
+                {
+                    dgvBooking.Rows.Add(b.NamaPemesan, b.TipeLapangan, b.Durasi, b.Status.ToString());
+                }
             }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            // Menutup form riwayat dan otomatis kembali ke FormUser yang disembunyikan (Hide)
             this.Close();
         }
     }
