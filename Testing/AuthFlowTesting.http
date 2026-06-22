@@ -1,0 +1,38 @@
+﻿@baseUrl = http://localhost:62241
+
+### Menampilkan pilihan role
+GET {{baseUrl}}/api/auth/roles
+
+### Login admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@gmail.com",
+  "password": "password123"
+}
+
+### Register customer
+POST {{baseUrl}}/api/auth/register/customer
+Content-Type: application/json
+
+{
+  "name": "Budi",
+  "email": "budi@gmail.com",
+  "password": "password123"
+}
+
+### Login customer
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "budi@gmail.com",
+  "password": "password123"
+}
+
+### Menampilkan profil
+GET {{baseUrl}}/api/auth/profile/2
+
+### Logout
+POST {{baseUrl}}/api/auth/logout
