@@ -15,32 +15,45 @@ namespace Testing
         {
             var service = new FilterService();
 
-            List<FilterJadwal> data = new List<FilterJadwal>();
+            List<FilterJadwal> data =
+                new List<FilterJadwal>();
+
+            string[] daftarGedung =
+            {
+                "Gedung A",
+                "Gedung B",
+                "Gedung C"
+            };
 
             for (int i = 0; i < 10000; i++)
             {
                 data.Add(new FilterJadwal
                 {
                     Hari = DateTime.Today,
-                    Gedung = i % 2 == 0
-                        ? "Gedung A"
-                        : "Gedung B"
+                    Gedung = daftarGedung[i % 3]
                 });
             }
 
-            Stopwatch stopwatch = new Stopwatch();
+            Stopwatch stopwatch =
+                new Stopwatch();
 
             stopwatch.Start();
 
-            var hasil = service.FilterData(data, x => x.Gedung == "Gedung A");
+            var hasil = service.FilterData(
+                data,
+                x => x.Gedung == "Gedung A"
+            );
 
             stopwatch.Stop();
 
-            long waktu = stopwatch.ElapsedMilliseconds;
+            long waktu =
+                stopwatch.ElapsedMilliseconds;
 
-            Console.WriteLine($"Execution Time = {waktu} ms");
+            Console.WriteLine(
+                $"Execution Time = {waktu} ms"
+            );
 
-            Assert.IsTrue( waktu < 1000);
+            Assert.IsTrue(waktu < 1000);
         }
     }
 }

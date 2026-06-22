@@ -31,10 +31,18 @@ namespace Testing
                 {
                     Hari = DateTime.Today,
                     Gedung = "Gedung B"
+                },
+                new FilterJadwal
+                {
+                    Hari = DateTime.Today,
+                    Gedung = "Gedung C"
                 }
             };
 
-            var hasil = service.FilterData(data, x => x.Gedung == "Gedung A");
+            var hasil = service.FilterData(
+                data,
+                x => x.Gedung == "Gedung A"
+            );
 
             Assert.AreEqual(1, hasil.Count);
             Assert.AreEqual("Gedung A", hasil[0].Gedung);
@@ -54,13 +62,24 @@ namespace Testing
                 {
                     Hari = DateTime.Today.AddDays(1),
                     Gedung = "Gedung B"
+                },
+                new FilterJadwal
+                {
+                    Hari = DateTime.Today.AddDays(2),
+                    Gedung = "Gedung C"
                 }
             };
 
-            var hasil = service.FilterData(data, x => x.Hari.Date == DateTime.Today);
+            var hasil = service.FilterData(
+                data,
+                x => x.Hari.Date == DateTime.Today
+            );
 
             Assert.AreEqual(1, hasil.Count);
-            Assert.AreEqual(DateTime.Today, hasil[0].Hari.Date);
+            Assert.AreEqual(
+                DateTime.Today,
+                hasil[0].Hari.Date
+            );
         }
 
         [TestMethod]
@@ -72,11 +91,24 @@ namespace Testing
                 {
                     Hari = DateTime.Today,
                     Gedung = "Gedung A"
+                },
+                new FilterJadwal
+                {
+                    Hari = DateTime.Today,
+                    Gedung = "Gedung B"
+                },
+                new FilterJadwal
+                {
+                    Hari = DateTime.Today,
+                    Gedung = "Gedung C"
                 }
             };
 
-            var hasil = service.FilterData(data,x => x.Gedung == "Gedung Z");
-       
+            var hasil = service.FilterData(
+                data,
+                x => x.Gedung == "Gedung Z"
+            );
+
             Assert.AreEqual(0, hasil.Count);
         }
 
@@ -85,7 +117,10 @@ namespace Testing
         {
             var data = new List<FilterJadwal>();
 
-            var hasil = service.FilterData(data, x => x.Gedung == "Gedung A");
+            var hasil = service.FilterData(
+                data,
+                x => x.Gedung == "Gedung A"
+            );
 
             Assert.AreEqual(0, hasil.Count);
         }
@@ -97,7 +132,10 @@ namespace Testing
 
             try
             {
-                service.FilterData<FilterJadwal>(null, x => true);
+                service.FilterData<FilterJadwal>(
+                    null,
+                    x => true
+                );
             }
             catch (ArgumentNullException)
             {

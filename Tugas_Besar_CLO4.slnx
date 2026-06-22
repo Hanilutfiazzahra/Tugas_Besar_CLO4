@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="../Aplikasi_Reservasi_Lapangan_Badminton/Aplikasi_Reservasi_Lapangan_Badminton.csproj" />
+  <Project Path="Aplikasi_Reservasi_Lapangan_Badminton/Aplikasi_Reservasi_Lapangan_Badminton.csproj" />
   <Project Path="Testing/Testing.csproj" Id="9cdd132f-6ab7-48df-a544-b025db99920e" />
   <Project Path="Tugas_Besar_CLO4/Tugas_Besar_CLO4.csproj" />
 </Solution>

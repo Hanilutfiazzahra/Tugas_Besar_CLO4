@@ -22,23 +22,40 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
         private DateTime _hariTerpilih;
         private string _gedungTerpilih;
-
-        public FormJadwalLapangan(DateTime hari, string gedung)
+        private string _emailTerpilih;
+        public FormJadwalLapangan(
+        DateTime hari,
+         string gedung
+        )
         {
             InitializeComponent();
 
             _hariTerpilih = hari;
             _gedungTerpilih = gedung;
 
-            lapanganService = new LapanganService();
-            scheduleService = new ScheduleService();
+            lapanganService =
+                new LapanganService();
 
-            daftarLapangan = lapanganService.GetLapanganByGedung(gedung);
+            scheduleService =
+                new ScheduleService();
 
-            lblTanggal.Text = "Tanggal : " + hari.ToString("dddd, dd MMMM yyyy");
-            lblGedung.Text = "Gedung : " + gedung;
+            daftarLapangan =
+                lapanganService
+                .GetLapanganByGedung(
+                    gedung
+                );
+
+            lblTanggal.Text =
+                "Tanggal : "
+                + hari.ToString(
+                    "dddd, dd MMMM yyyy"
+                );
+
+            lblGedung.Text =
+                "Gedung : "
+                + gedung;
+
         }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -64,7 +81,7 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
         }
 
-private void lblLanjutReservasi_Click(object sender, EventArgs e)
+        private void lblLanjutReservasi_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(cmbTipeLapangan.Text))
             {
@@ -83,6 +100,7 @@ private void lblLanjutReservasi_Click(object sender, EventArgs e)
 
             // constructor booking
             FormBooking booking = new FormBooking(
+                _emailTerpilih,
                 tanggalKirim,
                 gedungKirim,
                 tipeLapanganKirim,
