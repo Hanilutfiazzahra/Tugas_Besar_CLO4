@@ -16,9 +16,13 @@ namespace Tugas_Besar_CLO4
             // see https://aka.ms/applicationconfiguration.
 
             ApplicationConfiguration.Initialize();
+//<<<<<<< HEAD
+            Application.Run(new Form1());
+//=======
             Application.Run(
                 new Forms.FormLogin()
             );
+//>>>>>>> origin
         }
     }
 }

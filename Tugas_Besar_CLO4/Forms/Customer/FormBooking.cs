@@ -246,6 +246,7 @@ namespace Tugas_Besar_CLO4.Forms.Customer
 
                 txtStatus.Text =
                     booking.Status.ToString();
+                txtStatus.Text = booking.Status.ToString();
 
                 MessageBox.Show(
                     "Reservasi berhasil dibayar!",

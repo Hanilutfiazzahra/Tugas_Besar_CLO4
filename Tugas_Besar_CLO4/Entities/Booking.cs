@@ -29,7 +29,6 @@ namespace Tugas_Besar_CLO4.Entities
 
         public string Gedung { get; set; }
         public string TipeLapangan { get; set; }
-
         public Booking()
         {
             Status = BookingState.Pending;

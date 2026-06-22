@@ -23,39 +23,22 @@ namespace Tugas_Besar_CLO4.Forms.Customer
         private DateTime _hariTerpilih;
         private string _gedungTerpilih;
 
-        public FormJadwalLapangan(
-        DateTime hari,
-         string gedung
-        )
+        public FormJadwalLapangan(DateTime hari, string gedung)
         {
             InitializeComponent();
 
             _hariTerpilih = hari;
             _gedungTerpilih = gedung;
 
-            lapanganService =
-                new LapanganService();
+            lapanganService = new LapanganService();
+            scheduleService = new ScheduleService();
 
-            scheduleService =
-                new ScheduleService();
+            daftarLapangan = lapanganService.GetLapanganByGedung(gedung);
 
-            daftarLapangan =
-                lapanganService
-                .GetLapanganByGedung(
-                    gedung
-                );
-
-            lblTanggal.Text =
-                "Tanggal : "
-                + hari.ToString(
-                    "dddd, dd MMMM yyyy"
-                );
-
-            lblGedung.Text =
-                "Gedung : "
-                + gedung;
-
+            lblTanggal.Text = "Tanggal : " + hari.ToString("dddd, dd MMMM yyyy");
+            lblGedung.Text = "Gedung : " + gedung;
         }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
